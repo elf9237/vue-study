@@ -4,6 +4,18 @@ var vm = new Vue({
     totalMoney:0,
     productList:[]
   },
+  mounted:function(){
+    this.$nextTick(function(){
+      vm.cartView();
+    });
+  },
+  // 定义局部过滤器
+  filters: {
+      fomatermoney: function(value) {
+          return "$" + value + ".00";
+          //return "$" + value.toFixed(2);
+      }
+  },
   methods:{
     cartView: function(){
       // var _this = this;
@@ -19,15 +31,9 @@ var vm = new Vue({
       }
     );
     }
-  },
-  filters:{
-    formatMoney: function(value){
-      return "￥ "+value.toFixed(2);
-    }
-  },
-  mounted:function(){
-    this.$nextTick(function(){
-      vm.cartView();
-    });
   }
+});
+// 定义全局过滤器
+Vue.filter("money",function(value,type){
+  return "$" + value.toFixed(2) + type;
 });
